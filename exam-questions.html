@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Exam Questions</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Add DataTables CSS for answer tables if not already present -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+</head>
+<body>
+  <header>
+    <h1 id="exam-title">Exam Questions</h1>
+    <div class="user-info">
+      <span id="teacher-email"></span>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-link">
+      <a href="teacher.html">&larr; Back to Dashboard</a>
+    </div>
+
+    <section class="add-question card" id="add-question-section">
+      <h2>Add New Question</h2>
+      <div class="form-group">
+        <label for="question-title">Title</label>
+        <input type="text" id="question-title" placeholder="Question title">
+      </div>
+      <div class="form-group">
+        <label for="question-description">Description</label>
+        <textarea id="question-description" rows="4" placeholder="Detailed question description"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="question-topics">Topics (comma separated)</label>
+        <input type="text" id="question-topics" placeholder="Topic1, Topic2, Topic3">
+      </div>
+      <div class="form-group">
+        <label for="question-subtopics">Subtopics (comma separated)</label>
+        <input type="text" id="question-subtopics" placeholder="Subtopic1, Subtopic2">
+      </div>
+      <div class="form-group">
+        <label for="question-plan">Plan/Guidelines</label>
+        <textarea id="question-plan" rows="3" placeholder="Solution plan or guidelines"></textarea>
+      </div>
+      <div class="form-group">
+        <label>
+          <input type="checkbox" id="question-published" checked>
+          Published (visible to students)
+        </label>
+      </div>
+      <button class="btn-primary" onclick="addQuestion()">Add Question</button>
+    </section>
+
+    <!-- Edit Question Modal -->
+    <div id="edit-question-modal" class="modal" style="display:none;">
+      <div class="modal-content card">
+        <span class="close" onclick="closeEditModal()">&times;</span>
+        <h2>Edit Question</h2>
+        <div class="form-group">
+          <label for="edit-question-title">Title</label>
+          <input type="text" id="edit-question-title" placeholder="Question title">
+        </div>
+        <div class="form-group">
+          <label for="edit-question-description">Description</label>
+          <textarea id="edit-question-description" rows="4" placeholder="Detailed question description"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="edit-question-topics">Topics (comma separated)</label>
+          <input type="text" id="edit-question-topics" placeholder="Topic1, Topic2, Topic3">
+        </div>
+        <div class="form-group">
+          <label for="edit-question-subtopics">Subtopics (comma separated)</label>
+          <input type="text" id="edit-question-subtopics" placeholder="Subtopic1, Subtopic2">
+        </div>
+        <div class="form-group">
+          <label for="edit-question-plan">Plan/Guidelines</label>
+          <textarea id="edit-question-plan" rows="3" placeholder="Solution plan or guidelines"></textarea>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="edit-question-published">
+            Published (visible to students)
+          </label>
+        </div>
+        <button class="btn-primary" onclick="saveEditedQuestion()">Save Changes</button>
+        <button class="btn-secondary" onclick="closeEditModal()">Cancel</button>
+      </div>
+    </div>
+
+    <section class="import-questions card">
+      <h2>Import Questions from CSV</h2>
+      <div class="form-group">
+        <label for="csv-file">CSV File</label>
+        <input type="file" id="csv-file" accept=".csv">
+      </div>
+      <button class="btn-secondary" onclick="importQuestions()">Import Questions</button>
+      <p class="hint">CSV format: Title,Description,Topics,Subtopics,Plan</p>
+    </section>
+
+    <section class="questions-list">
+      <h2>Exam Questions</h2>
+      <div class="view-toggle">
+        <button id="card-view-btn" class="btn-secondary" onclick="showCardView()">Card View</button>
+        <button id="table-view-btn" class="btn-secondary" onclick="showTableView()">Table View</button>
+        <button id="unpublish-selected-btn" class="btn-danger" onclick="unpublishSelectedQuestions()" style="margin-left:16px;">Unpublish Selected</button>
+        <button id="export-text-answers-btn" class="btn-secondary" onclick="exportTextAnswersCSV()" style="margin-left:16px;">Export Text Answers CSV</button>
+        <button id="export-questions-btn" class="btn-secondary" onclick="exportQuestionsCSV()" style="margin-left:16px;">Export Questions CSV</button>
+      </div>
+      <div id="questions-by-student-container">
+        <!-- Grouped questions by student will be rendered here by JS -->
+      </div>
+      <div id="questions-table-container" style="display:none;">
+        <!-- Table view will be rendered here by JS -->
+        <!-- Sorting handled by JS, headers will have clickable sort icons/buttons -->
+      </div>
+    </section>
+
+    <!-- Invite Teacher Section -->
+    <section class="invite-teacher card">
+      <h2>Invite Another Teacher</h2>
+      <div class="form-group">
+        <label for="invite-email">Teacher Email</label>
+        <input type="email" id="invite-email" placeholder="teacher@example.com">
+      </div>
+      <div class="form-group">
+        <label for="invite-role">Role</label>
+        <select id="invite-role">
+          <option value="viewer">Viewer</option>
+          <option value="editor">Editor</option>
+        </select>
+      </div>
+      <button class="btn-primary" onclick="inviteTeacher()">Invite Teacher</button>
+      <div id="invite-status"></div>
+    </section>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/exam-questions.js"></script>
+</body>
+</html>
