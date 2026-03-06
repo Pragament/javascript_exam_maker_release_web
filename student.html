@@ -3,45 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Exam Question</title>
+  <meta name="description" content="Student workspace for selecting exam questions and submitting answers.">
+  <title>Student Question Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <!-- Add DataTables CSS -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 </head>
-<body>
-  <header>
-    <h1>Exam Question</h1>
+<body class="student-page">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="student-header" role="banner">
+    <div class="student-header__inner">
+      <p class="student-eyebrow">Exam Workspace</p>
+      <h1>Student Question Center</h1>
+      <p class="student-subtitle">
+        Pick a question, review details, and submit your answer through a focused modal flow.
+      </p>
+    </div>
   </header>
 
-  <main>
-    <div id="assigned-questions-section" class="card">
-      <h2>Your Assigned Questions</h2>
+  <main id="main-content" class="student-main" tabindex="-1">
+    <section id="assigned-questions-section" class="card student-panel" aria-labelledby="assigned-questions-title">
+      <div class="section-heading">
+        <h2 id="assigned-questions-title">Your Assigned Questions</h2>
+        <p>Questions currently assigned to your roll number.</p>
+      </div>
       <div id="assigned-questions-container" class="cards-container">
         <!-- Assigned questions will be loaded here -->
       </div>
-    </div>
+    </section>
 
-    <div id="question-selection" class="card">
-      <h2>Available Questions</h2>
+    <section id="question-selection" class="card student-panel" aria-labelledby="available-questions-title">
+      <div class="section-heading">
+        <h2 id="available-questions-title">Available Questions</h2>
+        <p>Questions are shown in random order each load.</p>
+      </div>
       <div id="questions-container" class="cards-container">
         <!-- Questions will be loaded here -->
       </div>
-    </div>
+    </section>
 
-    <div id="question-view" class="card" style="display: none;">
-      <h2>Question Details</h2>
-      <div id="question-details">
-        <!-- Question details will be loaded here -->
-      </div>
-      <div id="answer-submit-section" style="margin-top: 24px;">
-        <h3>Submit Your Answer</h3>
-        <textarea id="answer-text" rows="5" placeholder="Type your answer here..." style="width:100%;"></textarea>
-        <div style="margin: 8px 0;">
+    <div
+      id="answer-submit-modal"
+      class="modal"
+      style="display:none;"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="answer-modal-title"
+    >
+      <div class="modal-content card text-preview-modal-content answer-modal-content">
+        <span class="close" onclick="closeAnswerSubmitModal()" aria-label="Close answer modal">&times;</span>
+        <h3 id="answer-modal-title">Submit Your Answer</h3>
+        <textarea id="answer-text" class="answer-textarea" rows="6" placeholder="Type your answer here..."></textarea>
+        <div class="answer-upload hidden">
           <label for="answer-file">Or upload CSV file:</label>
           <input type="file" id="answer-file" accept=".csv,.xlsx,.xls ">
         </div>
-        <button class="btn-primary" onclick="submitAnswer()">Submit Answer</button>
-        <div id="answer-submit-status"></div>
+        <div class="answer-modal-actions">
+          <button class="btn-primary" onclick="submitAnswer()">Submit Answer</button>
+          <button class="btn-secondary" onclick="closeAnswerSubmitModal()">Close</button>
+        </div>
+        <div id="answer-submit-status" class="answer-status" aria-live="polite"></div>
       </div>
     </div>
   </main>

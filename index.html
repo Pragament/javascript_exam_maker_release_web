@@ -3,35 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Exam Portal</title>
+  <meta name="description" content="Secure student and teacher access portal for exams.">
+  <title>Exam Portal Access</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/auth.css">
 </head>
-<body>
-  <div class="auth-container">
-    <div class="auth-card">
-      <h1>Exam Portal</h1>
+<body class="auth-page">
+  <a class="skip-link" href="#auth-main">Skip to main content</a>
+  <main id="auth-main" class="auth-container">
+    <section class="auth-card" aria-labelledby="portal-title">
+      <p class="auth-kicker">Assessment Workspace</p>
+      <h1 id="portal-title">Exam Portal</h1>
+      <p class="auth-subtitle">Students can enter with exam code and roll number. Teachers can sign in with Google.</p>
       
-      <div class="tabs">
-        <button class="tab-btn active" onclick="openTab('student')">Student</button>
-        <button class="tab-btn" onclick="openTab('teacher')">Teacher</button>
+      <div class="tabs" role="tablist" aria-label="Portal access tabs">
+        <button class="tab-btn active" role="tab" aria-selected="true" onclick="openTab('student', this)">Student</button>
+        <button class="tab-btn" role="tab" aria-selected="false" onclick="openTab('teacher', this)">Teacher</button>
       </div>
       
-      <div id="student-tab" class="tab-content active">
+      <div id="student-tab" class="tab-content active" role="tabpanel" aria-label="Student access">
         <h2>Enter Exam</h2>
         <div class="form-group">
           <label for="exam-code">Exam Code</label>
-          <input type="text" id="exam-code" placeholder="6-digit code">
+          <input type="text" id="exam-code" inputmode="numeric" autocomplete="off" placeholder="6-digit code">
         </div>
         <div class="form-group">
           <label for="roll-number">Roll Number</label>
-          <input type="text" id="roll-number" placeholder="Your roll number">
+          <input type="text" id="roll-number" aria-describedby="roll-number-help" placeholder="Your roll number(s)">
+          <p id="roll-number-help" class="field-help">
+            For multiple students, use hyphen separator. Examples: <code>A6</code>, <code>A6-B5</code>, <code>A6-B5-C8</code>.
+          </p>
         </div>
         <button class="btn-primary" onclick="studentEnterExam()">Enter Exam</button>
         <p id="student-error" class="error-message"></p>
       </div>
       
-      <div id="teacher-tab" class="tab-content">
+      <div id="teacher-tab" class="tab-content" role="tabpanel" aria-label="Teacher access">
         <h2>Teacher Login</h2>
         <button class="btn-google" onclick="teacherLogin()">
           <img src="assets/google-icon.png" alt="Google icon">
@@ -39,8 +49,8 @@
         </button>
         <p id="auth-error" class="error-message"></p>
       </div>
-    </div>
-  </div>
+    </section>
+  </main>
 
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
