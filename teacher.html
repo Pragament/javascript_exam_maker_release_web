@@ -37,7 +37,111 @@
         <!-- Exams will be loaded here -->
       </div>
     </section>
+
+    <section class="create-class card">
+      <h2>Create New Class</h2>
+      <div class="form-group">
+        <label for="class-name">Class Name</label>
+        <input type="text" id="class-name" placeholder="Data Structures">
+      </div>
+      <button class="btn-primary" onclick="createNewClass()">Create Class</button>
+    </section>
+
+    <section class="classes-list">
+      <h2>Your Classes</h2>
+      <div id="classes-container" class="cards-container">
+        <!-- Classes will be loaded here -->
+      </div>
+    </section>
   </main>
+
+  <div id="manage-class-modal" class="modal" style="display:none;">
+    <div class="modal-content card">
+      <span class="close" onclick="closeManageClassModal()" aria-label="Close manage class modal">&times;</span>
+      <h2 id="manage-class-title">Manage Class</h2>
+      <p id="manage-class-code" class="hint"></p>
+      <div class="class-filter-grid">
+        <div class="form-group">
+          <label for="filter-roll-number">Roll Number</label>
+          <input type="text" id="filter-roll-number" placeholder="Optional">
+        </div>
+        <div class="form-group">
+          <label for="filter-device-id">Device ID</label>
+          <input type="text" id="filter-device-id" placeholder="Optional">
+        </div>
+        <div class="form-group">
+          <label for="filter-pc-code">PC</label>
+          <input type="text" id="filter-pc-code" placeholder="Optional">
+        </div>
+        <div class="form-group">
+          <label for="filter-include-domains">Include Domains</label>
+          <input type="text" id="filter-include-domains" placeholder="example.com, docs.example.com">
+        </div>
+        <div class="form-group">
+          <label for="filter-exclude-domains">Exclude Domains</label>
+          <input type="text" id="filter-exclude-domains" placeholder="youtube.com, instagram.com">
+        </div>
+        <div class="form-group">
+          <label for="filter-start-date">Start Date</label>
+          <input type="date" id="filter-start-date">
+        </div>
+        <div class="form-group">
+          <label for="filter-end-date">End Date</label>
+          <input type="date" id="filter-end-date">
+        </div>
+        <div class="form-group checkbox-form-group">
+          <label class="field-option" for="filter-has-prompt">
+            <input type="checkbox" id="filter-has-prompt">
+            Has Prompt
+          </label>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="applyManageClassFilters()">Apply Filters</button>
+        <button class="btn-small" onclick="resetManageClassFilters()">Reset</button>
+      </div>
+      <div class="class-detail-toolbar">
+        <span class="hint">View</span>
+        <div class="view-toggle" role="group" aria-label="Manage class log view">
+          <button id="manage-class-card-view-btn" class="btn-small" type="button" onclick="setManageClassView('card')">Card</button>
+          <button id="manage-class-table-view-btn" class="btn-small" type="button" onclick="setManageClassView('table')">Table</button>
+        </div>
+      </div>
+      <div id="manage-class-field-options" class="field-options" aria-label="Manage class visible fields">
+        <label class="field-option"><input type="checkbox" data-field="title" checked onchange="toggleManageClassField('title', this.checked)"> Title</label>
+        <label class="field-option"><input type="checkbox" data-field="deviceId" checked onchange="toggleManageClassField('deviceId', this.checked)"> Device ID</label>
+        <label class="field-option"><input type="checkbox" data-field="url" checked onchange="toggleManageClassField('url', this.checked)"> URL</label>
+        <label class="field-option"><input type="checkbox" data-field="prompt" checked onchange="toggleManageClassField('prompt', this.checked)"> Prompt</label>
+        <label class="field-option"><input type="checkbox" data-field="rollNumber" checked onchange="toggleManageClassField('rollNumber', this.checked)"> Roll No</label>
+        <label class="field-option"><input type="checkbox" data-field="pcCode" checked onchange="toggleManageClassField('pcCode', this.checked)"> PC</label>
+        <label class="field-option"><input type="checkbox" data-field="time" checked onchange="toggleManageClassField('time', this.checked)"> Time</label>
+      </div>
+      <div id="manage-class-logs" class="class-detail-list"></div>
+    </div>
+  </div>
+
+  <div id="wishlist-modal" class="modal" style="display:none;">
+    <div class="modal-content card">
+      <span class="close" onclick="closeWishlistModal()" aria-label="Close whitelist modal">&times;</span>
+      <h2 id="wishlist-title">Whitelist</h2>
+      <p id="wishlist-class-code" class="hint"></p>
+      <div class="form-group">
+        <label for="wishlist-item-input">Enter Wishlist Item</label>
+        <input type="text" id="wishlist-item-input" placeholder="Allowed site or note">
+      </div>
+      <div class="modal-actions">
+        <button class="btn-primary" onclick="submitWishlistItem()">Submit</button>
+      </div>
+      <div class="class-detail-toolbar">
+        <span class="hint">View</span>
+        <div class="view-toggle" role="group" aria-label="Wishlist view">
+          <button id="wishlist-card-view-btn" class="btn-small" type="button" onclick="setWishlistView('card')">Card</button>
+          <button id="wishlist-table-view-btn" class="btn-small" type="button" onclick="setWishlistView('table')">Table</button>
+        </div>
+      </div>
+      <div id="wishlist-items" class="class-detail-list"></div>
+    </div>
+  </div>
 
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>

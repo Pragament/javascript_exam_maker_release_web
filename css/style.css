@@ -65,11 +65,11 @@ main {
   margin-top: 1rem;
 }
 
-.exam-card, .question-card {
+.exam-card, .question-card, .class-card {
   transition: transform 0.2s;
 }
 
-.exam-card:hover, .question-card:hover {
+.exam-card:hover, .question-card:hover, .class-card:hover {
   transform: translateY(-5px);
 }
 
@@ -204,7 +204,7 @@ main {
 }
 
 /* No content messages */
-.no-exams, .no-questions {
+.no-exams, .no-questions, .no-classes {
   color: var(--dark-gray);
   font-style: italic;
   padding: 1rem 0;
@@ -215,6 +215,154 @@ main {
   margin-top: 1rem;
   display: flex;
   gap: 0.5rem;
+}
+
+.class-actions,
+.modal-actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.class-detail-toolbar {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.field-options {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+
+.field-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+}
+
+.field-option input {
+  margin: 0;
+}
+
+.checkbox-form-group {
+  display: flex;
+  align-items: flex-end;
+}
+
+.checkbox-form-group .field-option {
+  min-height: 44px;
+}
+
+.view-toggle {
+  display: inline-flex;
+  border: 1px solid var(--medium-gray);
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: var(--white);
+}
+
+.view-toggle .btn-small {
+  border-radius: 0;
+  border: none;
+  background: transparent;
+}
+
+.view-toggle .btn-small.is-active {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.class-logs-status {
+  color: var(--dark-gray);
+  font-size: 0.95rem;
+}
+
+.class-log-time {
+  color: var(--dark-gray);
+  font-size: 0.875rem;
+}
+
+.class-log-link {
+  word-break: break-all;
+}
+
+.class-log-url-separator {
+  margin-right: 0.25rem;
+}
+
+.class-log-prompt {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.inline-filter-button {
+  border: none;
+  background: transparent;
+  color: var(--primary-color);
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.inline-filter-button:hover {
+  color: #3367d6;
+}
+
+.class-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.class-detail-list {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.class-detail-list.table-view {
+  display: block;
+  overflow-x: auto;
+}
+
+.class-detail-item {
+  background-color: var(--light-gray);
+  border-radius: 6px;
+  padding: 0.9rem;
+}
+
+.class-detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--white);
+}
+
+.class-detail-table th,
+.class-detail-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--medium-gray);
+  text-align: left;
+  vertical-align: top;
+}
+
+.class-detail-table th {
+  background-color: var(--light-gray);
+  font-weight: 600;
+}
+
+.wishlist-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 /* Hint text */
