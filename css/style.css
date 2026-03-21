@@ -339,6 +339,29 @@ main {
   padding: 0.9rem;
 }
 
+.manage-class-export-panel {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: var(--light-gray);
+  border-radius: 6px;
+}
+
+.manage-class-export-panel textarea {
+  width: 100%;
+  min-height: 140px;
+  resize: vertical;
+}
+
+.blocked-url-item .modal-actions {
+  margin-top: 0.5rem;
+}
+
+.blocked-url-action-link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--primary-color);
+}
+
 .class-detail-table {
   width: 100%;
   border-collapse: collapse;
@@ -516,9 +539,79 @@ main {
   font-size: 0.93rem;
 }
 
+.student-question-filters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(20, 85, 138, 0.14);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.student-view-toggle {
+  margin-bottom: 1rem;
+}
+
+.student-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.student-filter-group label {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #123358;
+}
+
+.student-filter-group .hint {
+  margin-top: 0.1rem;
+}
+
+.student-filter-group select,
+.student-filter-group input {
+  width: 100%;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid rgba(20, 85, 138, 0.2);
+  border-radius: 10px;
+  background: #ffffff;
+  font-size: 0.96rem;
+  color: #10243e;
+}
+
+.student-filter-group select[multiple] {
+  min-height: 10.5rem;
+  padding: 0.45rem;
+}
+
+.student-filter-group-search {
+  grid-column: span 1;
+}
+
+.student-filter-reset-btn {
+  align-self: flex-start;
+  margin-top: 0.35rem;
+}
+
 .student-page .cards-container {
   gap: 1rem;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+.student-questions-table-container {
+  overflow-x: auto;
+}
+
+.student-question-table-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.student-question-table-actions .btn-small {
+  align-self: auto;
 }
 
 .student-page .question-card {
@@ -537,6 +630,16 @@ main {
 .student-page .question-card .description {
   margin-bottom: 0;
   color: #27486c;
+}
+
+.question-card-meta {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.7rem 0.8rem;
+  border-radius: 10px;
+  background: rgba(20, 111, 190, 0.07);
+  color: #27486c;
+  font-size: 0.9rem;
 }
 
 .student-page .question-card a {
@@ -594,6 +697,17 @@ main {
   line-height: 1.5;
 }
 
+.answer-field-label {
+  display: block;
+  margin: 0.9rem 0 0.45rem;
+  font-weight: 700;
+  color: #123358;
+}
+
+.answer-explanation-textarea {
+  min-height: 180px;
+}
+
 .answer-upload {
   margin: 0.5rem 0;
 }
@@ -628,5 +742,10 @@ main {
 
   .student-page .cards-container {
     grid-template-columns: 1fr;
+  }
+
+  .student-question-filters {
+    grid-template-columns: 1fr;
+    padding: 0.85rem;
   }
 }

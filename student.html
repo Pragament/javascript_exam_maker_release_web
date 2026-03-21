@@ -40,8 +40,40 @@
         <h2 id="available-questions-title">Available Questions</h2>
         <p>Questions are shown in random order each load.</p>
       </div>
+      <div class="view-toggle student-view-toggle">
+        <button type="button" id="student-card-view-btn" class="btn-secondary btn-small is-active">Card View</button>
+        <button type="button" id="student-table-view-btn" class="btn-secondary btn-small">Table View</button>
+      </div>
+      <div class="student-question-filters" aria-label="Filter available questions">
+        <div class="student-filter-group">
+          <label for="question-topic-filter">Topic</label>
+          <select id="question-topic-filter" multiple size="5">
+          </select>
+          <p class="hint">Hold Cmd/Ctrl to select or unselect multiple topics.</p>
+        </div>
+        <div class="student-filter-group">
+          <label for="question-subtopic-filter">Subtopic</label>
+          <select id="question-subtopic-filter" multiple size="5">
+          </select>
+          <p class="hint">Hold Cmd/Ctrl to select or unselect multiple subtopics.</p>
+        </div>
+        <div class="student-filter-group student-filter-group-search">
+          <label for="question-keyword-filter">Search keyword</label>
+          <input
+            type="search"
+            id="question-keyword-filter"
+            placeholder="Search Title, Description, Topics, Subtopics, Plan"
+          >
+          <button type="button" id="reset-question-filters-btn" class="btn-secondary student-filter-reset-btn">
+            Reset filters
+          </button>
+        </div>
+      </div>
       <div id="questions-container" class="cards-container">
         <!-- Questions will be loaded here -->
+      </div>
+      <div id="questions-table-container" class="student-questions-table-container" style="display:none;">
+        <!-- Sortable table view will be loaded here -->
       </div>
     </section>
 
@@ -57,6 +89,8 @@
         <span class="close" onclick="closeAnswerSubmitModal()" aria-label="Close answer modal">&times;</span>
         <h3 id="answer-modal-title">Submit Your Answer</h3>
         <textarea id="answer-text" class="answer-textarea" rows="6" placeholder="Type your answer here..."></textarea>
+        <label class="answer-field-label" for="answer-explanation">Explanation</label>
+        <textarea id="answer-explanation" class="answer-textarea answer-explanation-textarea" rows="6" placeholder="Explain why your answer is correct..."></textarea>
         <div class="answer-upload hidden">
           <label for="answer-file">Or upload CSV file:</label>
           <input type="file" id="answer-file" accept=".csv,.xlsx,.xls ">

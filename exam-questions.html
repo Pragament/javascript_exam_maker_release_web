@@ -45,6 +45,10 @@
         <textarea id="question-plan" rows="3" placeholder="Solution plan or guidelines"></textarea>
       </div>
       <div class="form-group">
+        <label for="question-explanation-template">Explanation Template</label>
+        <textarea id="question-explanation-template" rows="5" placeholder="Template students can use to explain their answer"></textarea>
+      </div>
+      <div class="form-group">
         <label>
           <input type="checkbox" id="question-published" checked>
           Published (visible to students)
@@ -79,6 +83,10 @@
           <textarea id="edit-question-plan" rows="3" placeholder="Solution plan or guidelines"></textarea>
         </div>
         <div class="form-group">
+          <label for="edit-question-explanation-template">Explanation Template</label>
+          <textarea id="edit-question-explanation-template" rows="5" placeholder="Template students can use to explain their answer"></textarea>
+        </div>
+        <div class="form-group">
           <label>
             <input type="checkbox" id="edit-question-published">
             Published (visible to students)
@@ -96,7 +104,78 @@
         <input type="file" id="csv-file" accept=".csv">
       </div>
       <button class="btn-secondary" onclick="importQuestions()">Import Questions</button>
-      <p class="hint">CSV format: Title,Description,Topics,Subtopics,Plan</p>
+      <p class="hint">CSV format: Title,Description,Topics,Subtopics,Plan,Explanation Template</p>
+      <div class="form-group">
+        <label for="csv-sample-prompt">Sample Prompt to Generate CSV</label>
+        <textarea id="csv-sample-prompt" rows="24" readonly>Here is a prompt template you can use to generate similar CSV question banks in the future:
+
+---
+
+Prompt:
+
+Generate a CSV with [NUMBER] [SUBJECT] exam questions without [CONSTRAINT] on [TOPIC] topics for [GRADE LEVEL] students.
+
+Output only raw CSV.
+Do not use markdown.
+Do not add explanations before or after the CSV.
+
+Use this exact header row:
+Title,Description,Topics,Subtopics,Plan,Explanation Template
+
+Requirements:
+- Create questions for [SKILL LEVEL] [SUBJECT] students.
+- Each row must have exactly 6 columns.
+- [TOPIC TYPE] Topics should be broad categories separated by semicolons when there are multiple values.
+- [SUBTOPIC TYPE] Subtopics should be specific concepts separated by semicolons when there are multiple values.
+- Plan should contain short teacher guidelines for evaluating the student's code. Focus on what to observe, not giving away answers.
+- Explanation Template should help the student explain their [SUBJECT] code in simple English sentences. Use tokens in brackets [like this] that the student must fill in. Include "A possible improvement is [improvement]." and "So this code works because [final reason]." to encourage critical thinking.
+- Escape commas correctly using CSV quoting when needed.
+
+---
+
+Example filled version for Python/math:
+
+Generate a CSV with 50 Python exam questions without Python loops on class 5678 math topics for class 567 students.
+
+Output only raw CSV.
+Do not use markdown.
+Do not add explanations before or after the CSV.
+
+Use this exact header row:
+Title,Description,Topics,Subtopics,Plan,Explanation Template
+
+Requirements:
+- Create questions for beginner Python coding students.
+- Each row must have exactly 6 columns.
+- Python Topics should be broad categories separated by semicolons when there are multiple values.
+- Math Subtopics should be specific concepts separated by semicolons when there are multiple values.
+- Plan should contain short teacher guidelines for evaluating the student's code. Focus on what to observe, not giving away answers.
+- Explanation Template should help the student explain their Python code to the teacher in simple English sentences. Use tokens in brackets [like this] that the student must fill in. Include "A possible improvement is [improvement]." and "So this code works because [final reason]." to encourage critical thinking.
+- Escape commas correctly using CSV quoting when needed.
+
+---
+
+Customization notes:
+
+[NUMBER] = How many questions (e.g., 30, 50, 100)
+[SUBJECT] = Subject area (e.g., Python, JavaScript, SQL)
+[CONSTRAINT] = Restriction to avoid (e.g., Python loops, list comprehensions, recursion)
+[TOPIC] = Core topic area (e.g., class 5678 math, data structures, algorithms)
+[GRADE LEVEL] = Target student level (e.g., class 567, grade 8-10, beginners)
+[SKILL LEVEL] = Student skill level (e.g., beginner, intermediate, advanced)
+[TOPIC TYPE] = What to put in Topics column (e.g., Python Topics, Programming Concepts)
+[SUBTOPIC TYPE] = What to put in Subtopics column (e.g., Math Subtopics, Coding Techniques)
+
+A sample CSV row could look like:
+"Odd or Even?","Player enters a number and program tells if it's odd or even using modulo operator.","Number System","Whole Numbers","1. Ask player for a whole number. 2. Use if-else with modulo operator (number % 2 == 0). 3. Print 'even' or 'odd'. 4. Ask if they want to play again (simple restart with new run).","Explanation:
+My Python program solves the question by [brief purpose].
+First, I take input from the user using [input method].
+Then I use [logic or operator] to check whether the number is odd or even.
+I used [if/else or other structure] so the program can choose the correct output.
+A possible improvement is [improvement].
+So this code works because [final reason]."
+</textarea>
+      </div>
     </section>
 
     <section class="questions-list">

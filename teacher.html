@@ -106,15 +106,56 @@
           <button id="manage-class-card-view-btn" class="btn-small" type="button" onclick="setManageClassView('card')">Card</button>
           <button id="manage-class-table-view-btn" class="btn-small" type="button" onclick="setManageClassView('table')">Table</button>
         </div>
+        <button class="btn-small" type="button" onclick="toggleManageClassImportPanel()">Import CSV</button>
+        <button class="btn-small" type="button" onclick="exportManageClassLogsCsv()">Export CSV</button>
+        <input id="manage-class-csv-input" class="hidden" type="file" accept=".csv,text/csv" onchange="handleManageClassCsvImport(event)">
       </div>
       <div id="manage-class-field-options" class="field-options" aria-label="Manage class visible fields">
+        <label class="field-option"><input type="checkbox" data-field="uniqueId" checked onchange="toggleManageClassField('uniqueId', this.checked)"> Unique ID</label>
         <label class="field-option"><input type="checkbox" data-field="title" checked onchange="toggleManageClassField('title', this.checked)"> Title</label>
         <label class="field-option"><input type="checkbox" data-field="deviceId" checked onchange="toggleManageClassField('deviceId', this.checked)"> Device ID</label>
         <label class="field-option"><input type="checkbox" data-field="url" checked onchange="toggleManageClassField('url', this.checked)"> URL</label>
         <label class="field-option"><input type="checkbox" data-field="prompt" checked onchange="toggleManageClassField('prompt', this.checked)"> Prompt</label>
+        <label class="field-option"><input type="checkbox" data-field="needsSpokenCorrection" checked onchange="toggleManageClassField('needsSpokenCorrection', this.checked)"> Needs Spoken Correction</label>
+        <label class="field-option"><input type="checkbox" data-field="spokenGrammarCorrected" checked onchange="toggleManageClassField('spokenGrammarCorrected', this.checked)"> Spoken Grammar Corrected</label>
+        <label class="field-option"><input type="checkbox" data-field="spokenGrammarExplanation" checked onchange="toggleManageClassField('spokenGrammarExplanation', this.checked)"> Spoken Grammar Explanation</label>
         <label class="field-option"><input type="checkbox" data-field="rollNumber" checked onchange="toggleManageClassField('rollNumber', this.checked)"> Roll No</label>
         <label class="field-option"><input type="checkbox" data-field="pcCode" checked onchange="toggleManageClassField('pcCode', this.checked)"> PC</label>
         <label class="field-option"><input type="checkbox" data-field="time" checked onchange="toggleManageClassField('time', this.checked)"> Time</label>
+      </div>
+      <div id="manage-class-import-panel" class="manage-class-export-panel hidden">
+        <div class="form-group">
+          <label for="manage-class-import-csv">CSV Input</label>
+          <textarea id="manage-class-import-csv" placeholder="Paste CSV here or use clipboard/file upload."></textarea>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-small" type="button" onclick="importManageClassCsvFromTextarea()">Import From Textarea</button>
+          <button class="btn-small" type="button" onclick="pasteManageClassCsvFromClipboard()">Paste Clipboard</button>
+          <button class="btn-small" type="button" onclick="triggerManageClassCsvImport()">Upload CSV File</button>
+        </div>
+      </div>
+      <div id="manage-class-export-panel" class="manage-class-export-panel hidden">
+        <div class="form-group">
+          <label for="manage-class-export-csv">CSV Output</label>
+          <textarea id="manage-class-export-csv" readonly placeholder="Filtered CSV will appear here."></textarea>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-small" type="button" onclick="copyManageClassExportCsv()">Copy CSV</button>
+          <button class="btn-small" type="button" onclick="downloadManageClassExportCsv()">Download CSV</button>
+        </div>
+        <div class="form-group">
+          <label for="manage-class-export-prompt">ChatGPT Prompt</label>
+          <textarea id="manage-class-export-prompt" readonly placeholder="Prompt for enriching the CSV will appear here."></textarea>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-small" type="button" onclick="copyManageClassExportPrompt()">Copy Prompt</button>
+        </div>
+      </div>
+      <div id="manage-class-blocked-urls-panel" class="manage-class-export-panel hidden">
+        <div class="form-group">
+          <label>Blocked URLs In Current Results</label>
+          <div id="manage-class-blocked-urls" class="class-detail-list"></div>
+        </div>
       </div>
       <div id="manage-class-logs" class="class-detail-list"></div>
     </div>
