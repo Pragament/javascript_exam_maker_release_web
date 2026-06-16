@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Class</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+  <header>
+    <h1>Manage Class</h1>
+    <div class="user-info">
+      <span id="teacher-email"></span>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="modal-content card" style="display:block; position:static;">
+      <span class="close" onclick="window.history.back()" aria-label="Close manage class">&times;</span>
+      <h2 id="manage-class-title">Manage Class</h2>
+      <p id="manage-class-code" class="hint"></p>
+      <div class="class-filter-grid">
+        <div class="form-group">
+          <label for="filter-roll-number">Roll Number</label>
+          <input type="text" id="filter-roll-number" placeholder="Optional">
+        </div>
+        <div class="form-group">
+          <label for="filter-device-id">Device ID</label>
+          <input type="text" id="filter-device-id" placeholder="Optional">
+        </div>
+        <div class="form-group">
+          <label for="filter-pc-code">PC</label>
+          <input type="text" id="filter-pc-code" placeholder="Optional">
+        </div>
+        <div class="form-group">
+          <label for="filter-include-domains">Include Domains</label>
+          <input type="text" id="filter-include-domains" placeholder="example.com, docs.example.com">
+        </div>
+        <div class="form-group">
+          <label for="filter-exclude-domains">Exclude Domains</label>
+          <input type="text" id="filter-exclude-domains" placeholder="youtube.com, instagram.com">
+        </div>
+        <div class="form-group">
+          <label for="filter-start-date">Start Date</label>
+          <input type="date" id="filter-start-date">
+        </div>
+        <div class="form-group">
+          <label for="filter-end-date">End Date</label>
+          <input type="date" id="filter-end-date">
+        </div>
+        <div class="form-group checkbox-form-group">
+          <label class="field-option" for="filter-has-prompt">
+            <input type="checkbox" id="filter-has-prompt">
+            Has Prompt
+          </label>
+        </div>
+        <div class="form-group checkbox-form-group">
+          <label class="field-option" for="filter-latest-per-device">
+            <input type="checkbox" id="filter-latest-per-device">
+            Latest Per Device
+          </label>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="applyManageClassFilters()">Apply Filters</button>
+        <button class="btn-small" onclick="resetManageClassFilters()">Reset</button>
+      </div>
+      <div class="class-detail-toolbar">
+        <span class="hint">View</span>
+        <div class="view-toggle" role="group" aria-label="Manage class log view">
+          <button id="manage-class-card-view-btn" class="btn-small" type="button" onclick="setManageClassView('card')">Card</button>
+          <button id="manage-class-table-view-btn" class="btn-small" type="button" onclick="setManageClassView('table')">Table</button>
+        </div>
+        <button class="btn-small" type="button" onclick="toggleManageClassImportPanel()">Import CSV</button>
+        <button class="btn-small" type="button" onclick="exportManageClassLogsCsv()">Export CSV</button>
+        <button id="manage-class-fields-toggle-btn" class="btn-small" type="button" onclick="toggleAllManageClassFields()">Deselect All Fields</button>
+        <input id="manage-class-csv-input" class="hidden" type="file" accept=".csv,text/csv" onchange="handleManageClassCsvImport(event)">
+      </div>
+      <div id="manage-class-field-options" class="field-options" aria-label="Manage class visible fields">
+        <label class="field-option"><input type="checkbox" data-field="uniqueId" checked onchange="toggleManageClassField('uniqueId', this.checked)"> Unique ID</label>
+        <label class="field-option"><input type="checkbox" data-field="title" checked onchange="toggleManageClassField('title', this.checked)"> Title</label>
+        <label class="field-option"><input type="checkbox" data-field="deviceId" checked onchange="toggleManageClassField('deviceId', this.checked)"> Device ID</label>
+        <label class="field-option"><input type="checkbox" data-field="url" checked onchange="toggleManageClassField('url', this.checked)"> URL</label>
+        <label class="field-option"><input type="checkbox" data-field="prompt" checked onchange="toggleManageClassField('prompt', this.checked)"> Prompt</label>
+        <label class="field-option"><input type="checkbox" data-field="needsSpokenCorrection" checked onchange="toggleManageClassField('needsSpokenCorrection', this.checked)"> Needs Spoken Correction</label>
+        <label class="field-option"><input type="checkbox" data-field="spokenGrammarCorrected" checked onchange="toggleManageClassField('spokenGrammarCorrected', this.checked)"> Spoken Grammar Corrected</label>
+        <label class="field-option"><input type="checkbox" data-field="spokenGrammarExplanation" checked onchange="toggleManageClassField('spokenGrammarExplanation', this.checked)"> Spoken Grammar Explanation</label>
+        <label class="field-option"><input type="checkbox" data-field="rollNumber" checked onchange="toggleManageClassField('rollNumber', this.checked)"> Roll No</label>
+        <label class="field-option"><input type="checkbox" data-field="pcCode" checked onchange="toggleManageClassField('pcCode', this.checked)"> PC</label>
+        <label class="field-option"><input type="checkbox" data-field="time" checked onchange="toggleManageClassField('time', this.checked)"> Time</label>
+      </div>
+      <div id="manage-class-import-panel" class="manage-class-export-panel hidden">
+        <div class="form-group">
+          <label for="manage-class-import-csv">CSV Input</label>
+          <textarea id="manage-class-import-csv" placeholder="Paste CSV here or use clipboard/file upload."></textarea>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-small" type="button" onclick="importManageClassCsvFromTextarea()">Import From Textarea</button>
+          <button class="btn-small" type="button" onclick="pasteManageClassCsvFromClipboard()">Paste Clipboard</button>
+          <button class="btn-small" type="button" onclick="triggerManageClassCsvImport()">Upload CSV File</button>
+        </div>
+      </div>
+      <div id="manage-class-export-panel" class="manage-class-export-panel hidden">
+        <div class="form-group">
+          <label for="manage-class-export-csv">CSV Output</label>
+          <textarea id="manage-class-export-csv" readonly placeholder="Filtered CSV will appear here."></textarea>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-small" type="button" onclick="copyManageClassExportCsv()">Copy CSV</button>
+          <button class="btn-small" type="button" onclick="downloadManageClassExportCsv()">Download CSV</button>
+        </div>
+        <div class="form-group">
+          <label for="manage-class-export-prompt">ChatGPT Prompt</label>
+          <textarea id="manage-class-export-prompt" readonly placeholder="Prompt for enriching the CSV will appear here."></textarea>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-small" type="button" onclick="copyManageClassExportPrompt()">Copy Prompt</button>
+        </div>
+      </div>
+      <div id="manage-class-blocked-urls-panel" class="manage-class-export-panel hidden">
+        <div class="form-group">
+          <label>Blocked URLs In Current Results</label>
+          <div id="manage-class-blocked-urls" class="class-detail-list"></div>
+        </div>
+      </div>
+      <div id="manage-class-logs" class="class-detail-list"></div>
+    </div>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/teacher.js"></script>
+  <script src="js/manage-class.js"></script>
+</body>
+</html>

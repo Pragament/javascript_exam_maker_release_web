@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wishlist</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+  <header>
+    <h1>Wishlist</h1>
+    <div class="user-info">
+      <span id="teacher-email"></span>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <main>
+    <div id="wishlist-modal" class="modal" style="display:block; position:static;">
+      <div class="modal-content card">
+        <span class="close" onclick="closeWishlistModal()" aria-label="Close whitelist modal">&times;</span>
+        <h2 id="wishlist-title">Whitelist</h2>
+        <p id="wishlist-class-code" class="hint"></p>
+        <div class="form-group">
+          <label for="wishlist-item-input">Enter Wishlist Item</label>
+          <input type="text" id="wishlist-item-input" placeholder="Allowed site or note">
+        </div>
+        <div class="modal-actions">
+          <button class="btn-primary" onclick="submitWishlistItem()">Submit</button>
+        </div>
+        <div class="class-detail-toolbar">
+          <span class="hint">View</span>
+          <div class="view-toggle" role="group" aria-label="Wishlist view">
+            <button id="wishlist-card-view-btn" class="btn-small" type="button" onclick="setWishlistView('card')">Card</button>
+            <button id="wishlist-table-view-btn" class="btn-small" type="button" onclick="setWishlistView('table')">Table</button>
+          </div>
+        </div>
+        <div id="wishlist-items" class="class-detail-list"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/teacher.js"></script>
+  <script src="js/wishlist.js"></script>
+</body>
+</html>
