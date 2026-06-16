@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exam Answers</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+</head>
+<body>
+  <header>
+    <h1 id="exam-title">Submitted Answers</h1>
+    <div class="user-info">
+      <span id="teacher-email"></span>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-link">
+      <a href="teacher.html">&larr; Back to Dashboard</a>
+    </div>
+
+    <section class="questions-list">
+      <h2>Submitted Answers</h2>
+      <div class="view-toggle">
+        <button id="answers-card-view-btn" class="btn-secondary" type="button">Card View</button>
+        <button id="answers-table-view-btn" class="btn-secondary" type="button">Table View</button>
+        <button id="answers-export-text-btn" class="btn-secondary" type="button" style="margin-left:16px;">Export Text Answers CSV</button>
+      </div>
+      <div id="answers-by-question-container">
+        <!-- Answer groups will be rendered here -->
+      </div>
+      <div id="answers-table-container" style="display:none;">
+        <!-- Table view will be rendered here -->
+      </div>
+    </section>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/exam-answers.js"></script>
+</body>
+</html>
